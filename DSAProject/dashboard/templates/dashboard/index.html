@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Airline CRM</title>
+</head>
+<body>
+
+    <h1>Панель управления авиарейсами</h1>
+    <hr>
+
+    <h2>Поиск рейса по ID</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        <label for="flight_id">Введите Flight_ID:</label>
+        <input type="text" id="flight_id" name="flight_id" required>
+        <button type="submit">Найти</button>
+    </form>
+
+    <br>
+
+    {% if flight %}
+        <h3>Рейс найден:</h3>
+        <ul>
+            <li><b>ID:</b> {{ flight.flight_id }}</li>
+            <li><b>Авиакомпания:</b> {{ flight.airline }}</li>
+            <li><b>Маршрут:</b> {{ flight.origin_airport }} -> {{ flight.destination_airport }}</li>
+            <li><b>Задержка:</b> {{ flight.departure_delay_min }} мин.</li>
+        </ul>
+    {% endif %}
+
+    {% if error %}
+        <p style="color: red;"><b>Ошибка:</b> {{ error }}</p>
+    {% endif %}
+
+</body>
+</html>
