@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>Поиск рейса по ID (Hash Map)</h2>
+    <form method="POST" action="/api/search">
+        <label>Введите Flight_ID:</label>
+        <input type="text" name="flight_id" required>
+        <button type="submit">Найти</button>
+    </form>
+
+    {% if flight %}
+        <div style="border: 1px solid #ccc; padding: 15px; margin-top: 20px; background: #f9f9f9;">
+            <h3>Рейс найден:</h3>
+            <ul>
+                <li><b>ID:</b> {{ flight['flight_id'] }}</li>
+                <li><b>Авиакомпания:</b> {{ flight['airline'] }}</li>
+                <li><b>Маршрут:</b> {{ flight['origin_airport'] }} -> {{ flight['destination_airport'] }}</li>
+                <li><b>Задержка:</b> {{ flight['departure_delay_min'] }} мин.</li>
+            </ul>
+
+            <details style="margin-top: 10px; cursor: pointer;">
+                <summary style="color: blue; font-weight: bold;">Показать полную информацию о рейсе</summary>
+                <ul style="margin-top: 10px;">
+                    <li><b>Тип самолета:</b> {{ flight['aircraft_type'] }}</li>
+                    <li><b>Погодные условия:</b> {{ flight['weather_condition'] }}</li>
+                    <li><b>Пассажиров на борту:</b> {{ flight['passenger_count'] }} чел.</li>
+                    <li><b>Выручка с билетов:</b> ${{ flight['ticket_revenue_usd'] }}</li>
+                </ul>
+            </details>
+        </div>
+    {% endif %}
+
+    {% if error %}
+        <p style="color: red;"><b>Ошибка:</b> {{ error }}</p>
+    {% endif %}
+{% endblock %}

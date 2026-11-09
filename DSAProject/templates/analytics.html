@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>Аналитика</h2>
+    
+    <div style="display: flex; gap: 50px;">
+        <div>
+            <h3>Сумма задержек на отрезке(SegmentTree)</h3>
+            <form method="POST" action="/api/range_sum">
+                <label>Индекс от (L):</label> <input type="number" name="l" required><br><br>
+                <label>Индекс до (R):</label> <input type="number" name="r" required><br><br>
+                <button type="submit">Посчитать</button>
+            </form>
+            {% if sum_result is not none %}
+                <p style="color: green;"><b>Сумма:</b> {{ sum_result }} мин.</p>
+            {% endif %}
+        </div>
+
+        <div>
+            <h3>Поиск порога (Binary Search)</h3>
+            <form method="POST" action="/api/binary_search">
+                <label>Сколько рейсов (K):</label> <input type="number" name="k" required><br><br>
+                <button type="submit">Найти порог</button>
+            </form>
+            {% if threshold_result is not none %}
+                <p style="color: blue;"><b>Порог:</b> {{ threshold_result }} мин.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if error %}
+        <p style="color: red;"><b>Ошибка:</b> {{ error }}</p>
+    {% endif %}
+
+        <hr style="margin: 30px 0;">
+
+    <h2>Глобальная аналитика графа (PageRank)</h2>
+    <p>Топ-5 самых важных аэропортов-хабов:</p>
+    <ol>
+        {% for airport, rank in top_airports[:5] %}
+            <li><b>{{ airport }}</b> — важность: {{ "%.4f"|format(rank) }}</li>
+        {% endfor %}
+    </ol>
+
+    <h2>Очередь на взлет (Бинарная куча)</h2>
+    <p>Топ-3 рейса с самой большой задержкой (ожидают в очереди):</p>
+    <ul>
+        {% for delay, flight_id in flight_queue.heap[:3] %}
+            <li>Рейс <b>{{ flight_id }}</b> — задержка {{ delay }} мин.</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

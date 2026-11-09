@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Airline CRM</title>
+</head>
+<body>
+    <nav style="margin-bottom: 20px; padding: 10px; background: #eee; border-bottom: 1px solid #ccc;">
+        <b>Airline CRM</b> |
+        <a href="/dashboard">Поиск рейсов</a> |
+        <a href="/analytics">Аналитика</a>
+
+        <form action="/api/logout" method="POST" style="display:inline; float:right; margin:0;">
+            <button type="submit">Выйти</button>
+        </form>
+    </nav>
+
+    <div class="content" style="padding: 20px;">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
